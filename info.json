@@ -1,0 +1,11 @@
+{
+    "name": "Metrorio",
+    "version": "0.0.1",
+    "title": "Metrorio",
+    "author": "ArtMares",
+    "description": "Adds underground railways",
+    "factorio_version": "0.16",
+    "dependencies": [
+        "base >= 0.16.0"
+    ]
+}
