@@ -12,11 +12,11 @@ data:extend(
         {
             {
                 type = "unlock-recipe",
-                recipe = "undergroud-station"
+                recipe = "underground-station"
             },
             {
                 type = "unlock-recipe",
-                recipe = "undegroup-gateway"
+                recipe = "underground-gateway"
             }
         },
         unit =
