@@ -1,17 +1,25 @@
 local inspect = require("inspect")
 
-require("metro.metrorio")
+local events = defines.events
 
-local metro = Metrorio("underground")
+require("classes.metrorio")
+
+local metrorio = Metrorio("underground")
 
 script.on_init(function()
-    metro.initSurface()
+    metrorio:initSurface()
+    metrorio:setMainSurface(game.surfaces[1].name)
 end)
 
 script.on_configuration_changed(function(data)
-    metro.initSurface()
+    metrorio:initSurface()
+    metrorio:setMainSurface(game.surfaces[1].name)
 end)
 
-script.on_event(defines.events.on_player_joined_game, function(event)
+script.on_event(events.on_player_joined_game, function(event)
+    game.print(metrorio)
+end)
 
+script.on_event(events.on_built_entity, function(event)
+    metrorio:onBuiltEntity(event)
 end)
