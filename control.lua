@@ -1,19 +1,35 @@
 local inspect = require("inspect")
 
+require("lib.util")
+
+if not metrolib then metrolib = {} end
+if not metrolib.events then metrolib.events = {} end
+
+metrolib.events.on_player_entered_metro = script.generate_event_name()
+metrolib.events.on_player_left_metro = script.generate_event_name()
+
 local events = defines.events
 
 require("classes.metrorio")
 
 local metrorio = Metrorio("underground")
 
+local function schedule_mike(min, max)
+    local minute = 60*60
+    return game.tick + math.random(
+        ternary(min ~= nil, function() return minute*min end, minute*35),
+        ternary(max ~= nil, function() return minute*max end, minute*250)
+    )
+end
+
 script.on_init(function()
     metrorio:initSurface()
-    metrorio:setMainSurface(game.surfaces[1].name)
+    metrorio:setMainSurface(game.surfaces[1])
 end)
 
 script.on_configuration_changed(function(data)
     metrorio:initSurface()
-    metrorio:setMainSurface(game.surfaces[1].name)
+    metrorio:setMainSurface(game.surfaces[1])
 end)
 
 script.on_event(events.on_player_joined_game, function(event)
@@ -22,4 +38,18 @@ end)
 
 script.on_event(events.on_built_entity, function(event)
     metrorio:onBuiltEntity(event)
+end)
+
+script.on_event(events.on_tick, function(event)
+    if event.tick % 60 == 0 then
+        game.prrint(schedule_mike(5, 10))
+    end
+end)
+
+script.on_event(events.on_chunk_generated, function(event)
+    if event.surface.name ~= metrorio.mainSurface.name then
+        local area = event.area
+        local s = string.format("area: [ left: [x = %s, y = %s], right: [x = %s, y = %s]]", area.left_top.x, area.left_top.y, area.right_bottom.x, area.right_bottom.y)
+        game.print(s)
+    end
 end)

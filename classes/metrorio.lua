@@ -27,6 +27,13 @@ local ceil = math.ceil
 Metrorio = class(function(self, name)
     self.name = name
     self.mainSufrace = nil
+    self.waypoints = nil
+    self.path = "__Metrorio__"
+    self.groudEntities = {
+        "matro-elevator",
+        "metro-transfer-container",
+        "metro-transfer-storage-tank"
+    }
 end)
 
 function Metrorio:__tostring()
@@ -73,16 +80,41 @@ function Metrorio:rules()
     rules["elevator-to-underground"] = {surface = self.mainSurface}
 end
 
-function Metrorio:createUnderGroundEntity(player, entity)
+function Metrorio:createMetroEntity(player, entity)
+    if entity.name == "metro-elevator" then
 
+    end
+end
+
+function Metrorio:createMetroElevator(player, position)
+    local entity = {
+        name = "metro-underground-elevator",
+        type = "electric-energy-interface",
+        icon = self.path .. "/graphics/icons/metro-underground-elevator.png",
+        icon_size = 32,
+        collision_box = {
+            {-2.45, -2.45},
+            {2.45, 2.45}
+        },
+        flags = {"not-blueprintable", "not-deconstructable"},
+        max_health = 100,
+        minable = nil,
+        corpse = "medium-remnants",
+        collision_mask = {},
+        energy_source = {
+            type = "electric",
+            buffer_capacity = "MJ",
+            usage_priority = "secondary-input",
+            input_flow_limit = "0W",
+            output_flow_limit = "MW"
+        }
+    }
 end
 
 function Metrorio:createEntity(entity)
     if entity ~= nil then
-        local surface = entity.surface
-        if surface.name ~= self.name and surface.name == "nauvis" then
+        self:generateChunk(entity.position)
 
-        end
     end
 end
 
@@ -93,10 +125,10 @@ end
 function Metrorio:onBuiltEntity(event)
     local player = game.players[event.player_index]
     local entity = event.created_entity
-    if entity.surface.name == "nauvis" then
+    if entity.surface.name == self.mainSurface.name then
         if entity.name == "metro-elevator" or
-           entity.name == "metro-transport-container" or
-           entity.name == "metro-transport-storage-tank"
+           entity.name == "metro-transfer-container" or
+           entity.name == "metro-transfer-storage-tank"
         then
             self:createUnderGroundEntity(player, entity)
         end
