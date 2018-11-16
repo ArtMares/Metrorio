@@ -70,3 +70,23 @@ local function floorMask()
         "ground-tile"
     }
 end
+
+local function picturesOut()
+    return {
+        {
+            picture = "__base__/graphics/terrian/out-of-map.png",
+            count = 1,
+            size = 1
+        }
+    }
+end
+
+local function picturesFF(i)
+    return  {
+        {
+            picture = M .. "/graphics/tile/ff" .. i .. "_1.png",
+            count = 16,
+            size = 1
+        }
+    }
+end
