@@ -23,7 +23,7 @@ local function createEntity(suffix, visible, count, sprite)
             },
             max_health = 500,
             on_animation = {
-                filename = "__Free_Real_Estate__/graphics/entity/factory.png",
+                filename = M .. "/graphics/entity/factory.png",
                 width = 285,
                 height = 224,
                 shift = {1.0, 0.0},
@@ -31,7 +31,7 @@ local function createEntity(suffix, visible, count, sprite)
                 priority = "extra-high",
             },
             off_animation = {
-                filename = "__Free_Real_Estate__/graphics/entity/factory.png",
+                filename = M .. "/graphics/entity/factory.png",
                 width = 285,
                 height = 224,
                 shift = {1.0, 0.0},

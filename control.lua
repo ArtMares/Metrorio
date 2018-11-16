@@ -1,6 +1,6 @@
 local inspect = require("inspect")
 
-require("lib.util")
+require("util.lib")
 
 if not metrolib then metrolib = {} end
 if not metrolib.events then metrolib.events = {} end
@@ -13,14 +13,6 @@ local events = defines.events
 require("classes.metrorio")
 
 local metrorio = Metrorio("underground")
-
-local function schedule_mike(min, max)
-    local minute = 60*60
-    return game.tick + math.random(
-        ternary(min ~= nil, function() return minute*min end, minute*35),
-        ternary(max ~= nil, function() return minute*max end, minute*250)
-    )
-end
 
 script.on_init(function()
     metrorio:initSurface()
@@ -42,7 +34,6 @@ end)
 
 script.on_event(events.on_tick, function(event)
     if event.tick % 60 == 0 then
-        game.prrint(schedule_mike(5, 10))
     end
 end)
 

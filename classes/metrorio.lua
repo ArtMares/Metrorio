@@ -1,4 +1,4 @@
-require("class")
+require("lib.class")
 
 local permissions = {}
 permissions.built_elevator = 1
@@ -116,6 +116,10 @@ function Metrorio:createEntity(entity)
         self:generateChunk(entity.position)
 
     end
+end
+
+function Metrorio:tickPower()
+
 end
 
 
